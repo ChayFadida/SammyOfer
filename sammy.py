@@ -12,7 +12,7 @@ import argparse
 def setup_args():
     parser = argparse.ArgumentParser(description='Sends mail if there is sammy ofer game today')
     parser.add_argument('--mail-list', required=True, type=str, help='mail list seperated by space'
-                                                                    ' e.g mail1@intel.com mail2@intel.com')
+                                                                    ' e.g mail1@gmail.com mail2@gmail.com')
     args = parser.parse_args()
     return args
  
@@ -94,7 +94,7 @@ def get_parsed_html(game: dict) -> str:
  
 
 def send_mail(subject: str, body: str, to: str):
-    server = smtp.SMTP('smtp.intel.com')
+    server = smtp.SMTP('<SMTP SERVER>')
     msg = MIMEMultipart("alternative")
  
     msg['Subject'] = subject
@@ -102,7 +102,7 @@ def send_mail(subject: str, body: str, to: str):
  
     msg.attach(MIMEText(body, "html"))
  
-    server.sendmail('noreply@intel.com', to.split(' '), msg.as_string())
+    server.sendmail('<sender_mail>', to.split(' '), msg.as_string())
     server.quit()
  
 
