@@ -1,0 +1,7 @@
+version: '3'
+services:
+  bot:
+    image: harbor.chay-techs.com/sammyofer/bot:0.0.2
+    environment:
+      - USER_ID=${USER_ID}
+      - BOT_TOKEN=${BOT_TOKEN}

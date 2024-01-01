@@ -29,8 +29,8 @@ class GamesAlert(object):
 
         else:
             print("No game today")
-            self.telegram_bot.send_message(self.user_id, message)
-
+            exit(0)
+            
     def translate_to_hebrew(self, text):
         translation = GoogleTranslator(source='en', target='iw').translate(text)
         return translation
