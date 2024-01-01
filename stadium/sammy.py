@@ -2,20 +2,6 @@ from typing import Union
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
-from string import Template
-import smtplib as smtp
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-import argparse
- 
-
-def setup_args():
-    parser = argparse.ArgumentParser(description='Sends mail if there is sammy ofer game today')
-    parser.add_argument('--mail-list', required=True, type=str, help='mail list seperated by space'
-                                                                    ' e.g mail1@gmail.com mail2@gmail.com')
-    args = parser.parse_args()
-    return args
- 
 
 class SammyOferApi:
     def __init__(self):
@@ -85,30 +71,7 @@ class SammyOferApi:
         return self.get_game_on_date(today)
  
 
-def get_parsed_html(game: dict) -> str:
-    with open('mail.html', 'r') as file:
-        mail_html = file.read()
-    template = Template(mail_html)
-    parsed_html = template.substitute(game)
-    return parsed_html
- 
-
-def send_mail(subject: str, body: str, to: str):
-    server = smtp.SMTP('<SMTP SERVER>')
-    msg = MIMEMultipart("alternative")
- 
-    msg['Subject'] = subject
-    msg['To'] = ', '.join(to.split(' '))
- 
-    msg.attach(MIMEText(body, "html"))
- 
-    server.sendmail('<sender_mail>', to.split(' '), msg.as_string())
-    server.quit()
- 
-
 if __name__ == "__main__":
-    args = setup_args()
-    mailing_list = args.mail_list
     api = SammyOferApi()
     api.print_all_games()
     game = api.get_today_game()
@@ -117,5 +80,3 @@ if __name__ == "__main__":
         exit(0)
     else:
         print(f'played today: {game}')
-    html = get_parsed_html(game)
-    send_mail('Sammy Ofer hosts a game today!', html, mailing_list)

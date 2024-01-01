@@ -1,2 +1,5 @@
 beautifulsoup4==4.11.1
 requests==2.26.0
+python-telegram-bot==20.7
+deep-translator==1.11.4
+
