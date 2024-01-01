@@ -20,7 +20,7 @@ class GamesAlert(object):
             print(game)
 
         # Get today's game
-        today_game = {'team1': 'Maccabi Haifa', 'team2': 'Maccabi Petach Tikva', 'date': datetime.datetime(2024, 1, 14, 20, 30)} #api.get_today_game()
+        today_game = api.get_today_game()
 
         if today_game is not None:
             # If there is a game today, send a message
