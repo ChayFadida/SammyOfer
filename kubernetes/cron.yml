@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: send-alert
+  namespace: SammyOfer
+spec:
+  schedule: "0 10 * * *" # Every 24 Hours At 12:00am
+  successfulJobsHistoryLimit: 3  # Keep track of successful jobs (adjust as needed)
+  failedJobsHistoryLimit: 1      # Keep track of failed jobs (adjust as needed)
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            image: harbor.chay-techs.com/sammyofer/bot:0.0.2
+          restartPolicy: Never
+          imagePullSecrets:
+            - name: telegram-bot-registry-key
