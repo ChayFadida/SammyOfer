@@ -2,9 +2,9 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: send-alert
-  namespace: SammyOfer
+  namespace: sammyofer
 spec:
-  schedule: "0 10 * * *" # Every 24 Hours At 12:00am
+  schedule: "0 8 * * *" # Every 24 Hours At 08:00am
   successfulJobsHistoryLimit: 3  # Keep track of successful jobs (adjust as needed)
   failedJobsHistoryLimit: 1      # Keep track of failed jobs (adjust as needed)
   jobTemplate:
@@ -12,7 +12,19 @@ spec:
       template:
         spec:
           containers:
-            image: harbor.chay-techs.com/sammyofer/bot:0.0.2
+          - name: send-alert
+            image: harbor.chay-techs.com/sammyofer/bot:0.0.3
+            env:
+            - name: USER_ID
+              valueFrom:
+                secretKeyRef:
+                  name: telegram-secrets
+                  key: userid
+            - name: BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: telegram-secrets
+                  key: apikey
           restartPolicy: Never
           imagePullSecrets:
             - name: telegram-bot-registry-key
