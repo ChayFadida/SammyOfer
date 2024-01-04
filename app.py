@@ -3,7 +3,6 @@ from stadium.sammy import SammyOferApi
 from bots.telegramBot import TelegramBot
 from config.config import bot_token, user_id
 from deep_translator import GoogleTranslator
-import datetime
 
 class GamesAlert(object):
     def __init__(self, telegram_bot, user_id):
